@@ -21,8 +21,8 @@ spec:
         image: ibmcom/guestbook:v1
         ports:
         - name: http-server
-        containerPort: 80
-          
+        - containerPort: 80
+---
 
 apiVersion: v1
 kind: Service
