@@ -1,38 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: guestbook-v1
-  labels:
-    app: guestbook
-    version: "1.0"
+ name: guestbook-v1
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: guestbook
-  template:
-    metadata:
-      labels:
-        app: guestbook
-        version: "1.0"
-    spec:
-      containers:
-      - name: guestbook
-        image: ibmcom/guestbook:v1
-        ports:
-        - name: http-server
-        - containerPort: 3000
-
+ replicas: 2
+ template:
+   metadata:
+     labels:
+       app: guestbook-v1
+   spec:
+     containers:
+     - name: guestbook-v1
+       image: ibmcom/guestbook:v1
+       # for local development against minikube registry
+       #imagePullPolicy: Never
+       ports:
+       - containerPort: 80
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: guestbook
-  labels:
-    app: guestbook
+ name: guestbook-v1service
+ labels:
+   app: guestbook-v1service
 spec:
-  ports:
-  - port: 3000
-    targetPort: http-server
-  selector:
-    app: guestbook
-  type: NodePort
+ type: NodePort
+ ports:
+   # the port that this service should serve on
+   - port: 80
+ # label keys and values that must match in order to receive traffic for this service
+ selector:
+   app: guestbook-v1
