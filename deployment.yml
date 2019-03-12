@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: guestbook
-        image: vinicius/guestbook:v1
+        image: rochavinicius/guestbook
         ports:
         - name: http-server
           containerPort: 3000
